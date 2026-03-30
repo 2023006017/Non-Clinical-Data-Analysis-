@@ -1,0 +1,22 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+*.Rcheck/
+
+# Output files (regenerate from scripts)
+output/*.rds
+output/make_docx.js
+
+# Quarto render artifacts
+report/_freeze/
+report/.quarto/
+report/*_files/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large data (keep CSVs, exclude if >50MB)
+*.log

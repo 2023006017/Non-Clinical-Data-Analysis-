@@ -1,0 +1,58 @@
+# SETUP.md — How to Run This Project
+
+## Prerequisites
+
+Install R (≥ 4.3) from: https://cran.r-project.org
+
+Then install required packages by running this in your R console:
+
+```r
+install.packages(c(
+  "tidyverse",    # data manipulation
+  "nlmixr2",      # PopPK modeling (FOCEI)
+  "ggplot2",      # visualization
+  "patchwork",    # multi-panel plots
+  "vpc",          # Visual Predictive Check
+  "xpose",        # diagnostic plots
+  "MASS",         # correlated random effects
+  "knitr",        # report rendering
+  "kableExtra",   # table formatting
+  "GGally",       # correlation plots
+  "ggridges"      # ridge plots
+))
+```
+
+## Run the full pipeline
+
+Open RStudio, set working directory to this project folder, then run in order:
+
+```r
+source("R/01_simulate_data.R")    # ~5 seconds
+source("R/02_eda_plots.R")        # ~30 seconds
+source("R/03_poppk_model.R")      # ~5-10 minutes (FOCEI estimation)
+source("R/04_vpc_simulation.R")   # ~2-5 minutes (500 VPC simulations)
+```
+
+## Render the Quarto report
+
+```r
+install.packages("quarto")
+quarto::quarto_render("report/CNS_PopPK_Report.qmd")
+# Opens as HTML in browser — also renders PDF if LaTeX installed
+```
+
+## Output files
+
+| Folder | Contents |
+|--------|----------|
+| `data/` | Simulated PK dataset (CSV, NONMEM-format) |
+| `plots/` | All 11 figures (PNG, 200 DPI) |
+| `output/` | Model objects (RDS), Word summary (DOCX) |
+| `report/` | Quarto source + rendered HTML |
+
+## Notes
+
+- All data are fully **simulated** — this is a portfolio/educational project
+- Models take several minutes to run (FOCEI requires iterative estimation)
+- If `nlmixr2` installation fails, try: `install.packages("nlmixr2", dependencies = TRUE)`
+- Tested on R 4.3.2, Windows 11 and Ubuntu 22.04
